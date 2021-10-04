@@ -198,14 +198,17 @@ namespace ITCA
             bool loadSuccessful = true;
             if (!File.Exists("SaveData.txt"))
                 loadSuccessful = false;
-            StreamReader reader = new StreamReader("SaveData.txt");
-            if (!int.TryParse(reader.ReadLine(), out _currentFloor))
-                loadSuccessful = false;
-            if (!int.TryParse(reader.ReadLine(), out _player.AttackPower))
-                loadSuccessful = false;
-            if (!int.TryParse(reader.ReadLine(), out _player.DefensePower))
-                loadSuccessful = false;
-            reader.Close();
+            if (File.Exists("SaveData.txt"))
+            {
+                StreamReader reader = new StreamReader("SaveData.txt");
+                if (!int.TryParse(reader.ReadLine(), out _currentFloor))
+                    loadSuccessful = false;
+                if (!int.TryParse(reader.ReadLine(), out _player.AttackPower))
+                    loadSuccessful = false;
+                if (!int.TryParse(reader.ReadLine(), out _player.DefensePower))
+                    loadSuccessful = false;
+                reader.Close();
+            }
 
             return loadSuccessful;
         } //Loading the game
@@ -296,6 +299,11 @@ namespace ITCA
                     Console.WriteLine(_currentScene);
                     Console.ReadKey();
                     Console.Clear();
+                }
+                else 
+                {
+                    Console.WriteLine("Unable to load save/ No save file found.");
+                    return;
                 }
             }
             else if (choice == 2)
